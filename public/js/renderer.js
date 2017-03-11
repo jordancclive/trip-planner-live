@@ -40,13 +40,16 @@ const wireUpDaySelector = function(className){
          addDay();
      });
 };
-
+let wiredup = false;
 function renderAll() {
     renderSelector('#hotel-choices', hotels, 'hotel', updateDay);
     renderSelector('#restaurant-choices', restaurants, 'resturant', updateDay);
     renderSelector('#activity-choices', activities, 'activity', updateDay);
     renderDaySelector('.day-buttons', state.selectedDayIdx, addDay);
-    wireUpDaySelector('.day-buttons');
+    if(!wiredup){
+        wiredup = true;
+        wireUpDaySelector('.day-buttons');
+    }
 }
 
 renderAll();
