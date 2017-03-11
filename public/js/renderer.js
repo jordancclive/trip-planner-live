@@ -106,9 +106,30 @@ const wireUpDaySelector = function(className) {
     });
 };
 
-const removeSelector = function(id){
-  $(id).on('click', 'button', function(){console.log($(this).parent().index(), $(this).parent().parent().parent().index(),this)});
-}
+const wireUpDayAgendaRemove = function(id) {
+    $(id).on('click', 'button', function() {
+        const listIndex = $(this).parent().index();
+        const viewIndex = $(this).parent().parent().parent().index();
+        let type;
+        switch (viewIndex) {
+            case 0:
+                type = 'hotels';
+                break;
+            case 1:
+                type = 'restaurants';
+                break;
+            case 2:
+                type = 'activities';
+                break;
+        }
+        removeEvent(type, listIndex);
+    });
+};
+
+const removeEvent = function(type, index) {
+    state.days[state.selectedDayIdx][type].splice(index, 1);
+    renderWholeDay();
+};
 
 let wiredup = false;
 
@@ -120,7 +141,7 @@ function renderAll() {
     if (!wiredup) {
         wiredup = true;
         wireUpDaySelector('.day-buttons');
-        removeSelector('#itinerary');
+        wireUpDayAgendaRemove('#itinerary');
     }
 }
 
