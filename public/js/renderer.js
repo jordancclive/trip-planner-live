@@ -13,7 +13,9 @@ let renderSelector = (id, data, mode, updateDayFnc) => {
 
 const updateDay = function(id, mode) {
     var selectedIndex = $(id + ' option:selected').index();
-    state.days[state.selectedDayIdx][mode] = selectedIndex;
+    state.days[state.selectedDayIdx][mode] =  state.days[state.selectedDayIdx][mode] || [];
+     state.days[state.selectedDayIdx][mode].push(window[mode][selectedIndex]);
+     renderWholeDay();
 }
 
 const renderDaySelector = (className, idx) => {
@@ -32,9 +34,10 @@ const renderDaySelector = (className, idx) => {
 
 const renderDay = function(id, dayData) {
     $(id).empty();
-    const hotel = dayData.hotel || null;
+    const hotels = dayData.hotels || [];
+    const hotel = hotels[0];
     const activities = dayData.activities || [];
-    const resturants = dayData.resturants || [];
+    const restaurants = dayData.restaurants || [];
     var hotelString = hotel ? `<div>
       <h4>My Hotel</h4>
       <ul class="list-group">
@@ -44,7 +47,7 @@ const renderDay = function(id, dayData) {
           </div>
       </ul>
   </div>` : `<div><h4>My Hotel</h4><ul class="list-group"></ul></div>`;
-    var restaurantMap = resturants.map(restaurant => {
+    var restaurantMap = restaurants.map(restaurant => {
         return `<div class="itinerary-item">
                 <span class="title">${restaurant.name}</span>
                 <button class="btn btn-xs btn-danger remove btn-circle">x</button>
@@ -102,12 +105,13 @@ const wireUpDaySelector = function(className) {
         selectDay(index);
     });
 };
+
 let wiredup = false;
 
 function renderAll() {
-    renderSelector('#hotel-choices', hotels, 'hotel', updateDay);
-    renderSelector('#restaurant-choices', restaurants, 'resturant', updateDay);
-    renderSelector('#activity-choices', activities, 'activity', updateDay);
+    renderSelector('#hotel-choices', hotels, 'hotels', updateDay);
+    renderSelector('#restaurant-choices', restaurants, 'restaurants', updateDay);
+    renderSelector('#activity-choices', activities, 'activities', updateDay);
     renderWholeDay();
     if (!wiredup) {
         wiredup = true;
