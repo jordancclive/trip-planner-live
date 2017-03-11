@@ -30,6 +30,46 @@ const renderDaySelector = (className, idx) => {
     $(className).append(selectors.join(''));
 };
 
+const renderDay = function(id, dayData){
+  $(id).empty();
+  var hotelString = `<div>
+      <h4>My Hotel</h4>
+      <ul class="list-group">
+          <div class="itinerary-item">
+              <span class="title">${dayData.hotel.name}</span>
+              <button class="btn btn-xs btn-danger remove btn-circle">x</button>
+          </div>
+      </ul>
+  </div>`
+  var restaurantMap = dayData.restaurants.map(restaurant =>{
+    return `<div class="itinerary-item">
+                <span class="title">${restaurant.name}</span>
+                <button class="btn btn-xs btn-danger remove btn-circle">x</button>
+            </div>`
+  })
+  var restaurantsString = `<div>
+      <h4>My Restaurants</h4>
+      <ul class="list-group">
+        ${restaurantMap.join('')}
+      </ul>
+  </div>`
+  var activitiesMap = dayData.activities.map(activity =>{
+    return `<div class="itinerary-item">
+        <span class="title">${activity.name}</span>
+        <button class="btn btn-xs btn-danger remove btn-circle">x</button>
+    </div>`
+  })
+  var activitiesString = `<div>
+      <h4>My Activities</h4>
+      <ul class="list-group">
+          ${activitiesMap.join('')}
+      </ul>
+  </div>`
+  $(id).append(hotelString);
+  $(id).append(restaurantsString);
+  $(id).append(activitiesString);
+}
+
 const addDay = function(){
     state.days.push({});
     renderDaySelector('.day-buttons', state.selectedDayIdx);
@@ -46,6 +86,7 @@ function renderAll() {
     renderSelector('#restaurant-choices', restaurants, 'resturant', updateDay);
     renderSelector('#activity-choices', activities, 'activity', updateDay);
     renderDaySelector('.day-buttons', state.selectedDayIdx, addDay);
+    renderDay('#itinerary', state.days[0]);
     if(!wiredup){
         wiredup = true;
         wireUpDaySelector('.day-buttons');
