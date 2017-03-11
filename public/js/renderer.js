@@ -32,7 +32,7 @@ const renderDaySelector = (className, idx) => {
     $(className).append(selectors.join(''));
 };
 
-const renderDay = function(id, dayData) {
+const renderDay = function(id, dayData = {}) {
     $(id).empty();
     const hotels = dayData.hotels || [];
     const hotel = hotels[0];
@@ -126,6 +126,18 @@ const wireUpDayAgendaRemove = function(id) {
     });
 };
 
+const wireUpDayRemove = function(id) {
+    $(id).on('click', 'button', function() {
+        state.days.splice(state.selectedDayIdx, 1);
+        state.selectedDayIdx = state.selectedDayIdx - 1 < 0 ? 0 : state.selectedDayIdx - 1;
+        if (state.days.length === 0) {
+            state.days.push({});
+        }
+        renderWholeDay();
+    });
+
+}
+
 const removeEvent = function(type, index) {
     state.days[state.selectedDayIdx][type].splice(index, 1);
     renderWholeDay();
@@ -142,6 +154,7 @@ function renderAll() {
         wiredup = true;
         wireUpDaySelector('.day-buttons');
         wireUpDayAgendaRemove('#itinerary');
+        wireUpDayRemove('#day-title');
     }
 }
 
