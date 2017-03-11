@@ -83,10 +83,15 @@ const selectDay = function(index) {
     renderWholeDay();
 };
 
+const renderDayTitle = function(id, index) {
+    $(id + ' span').text(`Day ${index + 1}`);
+}
+
 const renderWholeDay = function() {
     renderDaySelector('.day-buttons', state.selectedDayIdx, addDay);
     renderDay('#itinerary', state.days[state.selectedDayIdx]);
-}
+    renderDayTitle('#day-title', state.selectedDayIdx);
+};
 
 const wireUpDaySelector = function(className) {
     $(className).on('click', '#day-add', function() {
