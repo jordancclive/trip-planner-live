@@ -6,4 +6,10 @@ let renderSelector = (id, data)=> {
   $(id).append(dropdown.join(''));
 }
 
-renderSelector('#hotel-choices', hotels);
+function renderAll(){
+  renderSelector('#hotel-choices', hotels);
+  renderSelector('#restaurant-choices', restaurants);
+  renderSelector('#activity-choices', activities);
+};
+
+renderAll();
