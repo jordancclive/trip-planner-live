@@ -13,9 +13,9 @@ let renderSelector = (id, data, mode, updateDayFnc) => {
 
 const updateDay = function(id, mode) {
     var selectedIndex = $(id + ' option:selected').index();
-    state.days[state.selectedDayIdx][mode] =  state.days[state.selectedDayIdx][mode] || [];
-     state.days[state.selectedDayIdx][mode].push(window[mode][selectedIndex]);
-     renderWholeDay();
+    state.days[state.selectedDayIdx][mode] = state.days[state.selectedDayIdx][mode] || [];
+    state.days[state.selectedDayIdx][mode].push(window[mode][selectedIndex]);
+    renderWholeDay();
 }
 
 const renderDaySelector = (className, idx) => {
