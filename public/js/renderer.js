@@ -3,8 +3,16 @@ let renderSelector = (id, data) => {
     var dropdown = data.map(function(dataObject) {
         return "<option>" + dataObject.name + "</option>";
     });
+
+    var button = $(id).siblings('button');
+    button.on('click', function(){
+        var selectedIndex = $(id + ' option:selected').index();
+        var selectedData = data[selectedIndex];
+        console.log(selectedData.name);
+    });
     $(id).append(dropdown.join(''));
 }
+// $('#hotel-choices option:selected');
 
 const renderDaySelector = (className, idx) => {
     const selectors = state.days.map((day, index) => {
