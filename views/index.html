@@ -89,4 +89,9 @@
     </div>
   </div>
 </div>
+<script>
+  var hotels = {{ hotels | dump | safe }};
+  var restaurants = {{ restaurants | dump | safe }};
+  var activities = {{ activities | dump | safe }};
+</script>
 {% endblock %}
