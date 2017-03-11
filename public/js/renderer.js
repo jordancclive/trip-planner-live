@@ -1,4 +1,4 @@
-let renderSelector = (id, data) => {
+let renderSelector = (id, data, mode, updateDayFnc) => {
     $(id).empty();
     var dropdown = data.map(function(dataObject) {
         return "<option>" + dataObject.name + "</option>";
@@ -6,13 +6,16 @@ let renderSelector = (id, data) => {
 
     var button = $(id).siblings('button');
     button.on('click', function(){
-        var selectedIndex = $(id + ' option:selected').index();
-        var selectedData = data[selectedIndex];
-        console.log(selectedData.name);
+        updateDayFnc(id, data, mode);
     });
     $(id).append(dropdown.join(''));
+};
+
+const updateDay = function(id, data, mode){
+    var selectedIndex = $(id + ' option:selected').index();
+    var selectedData = data[selectedIndex];
+    state.days[state.selectedDayIdx][mode] = selectedData;
 }
-// $('#hotel-choices option:selected');
 
 const renderDaySelector = (className, idx) => {
     const selectors = state.days.map((day, index) => {
@@ -26,9 +29,9 @@ const renderDaySelector = (className, idx) => {
 };
 
 function renderAll() {
-    renderSelector('#hotel-choices', hotels);
-    renderSelector('#restaurant-choices', restaurants);
-    renderSelector('#activity-choices', activities);
+    renderSelector('#hotel-choices', hotels, 'hotel', updateDay);
+    renderSelector('#restaurant-choices', restaurants, 'resturant', updateDay);
+    renderSelector('#activity-choices', activities, 'activity', updateDay);
     renderDaySelector('.day-buttons', state.selectedDayIdx);
 }
 
