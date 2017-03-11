@@ -106,6 +106,10 @@ const wireUpDaySelector = function(className) {
     });
 };
 
+const removeSelector = function(id){
+  $(id).on('click', 'button', function(){console.log($(this).parent().index(), $(this).parent().parent().parent().index(),this)});
+}
+
 let wiredup = false;
 
 function renderAll() {
@@ -116,6 +120,7 @@ function renderAll() {
     if (!wiredup) {
         wiredup = true;
         wireUpDaySelector('.day-buttons');
+        removeSelector('#itinerary');
     }
 }
 
